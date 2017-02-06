@@ -1,5 +1,5 @@
 /*
- * main.cc
+ * main.cpp
  *
  *  Created on: 24/mar/2015
  *      Author: nicola
@@ -60,4 +60,5 @@ int main(int argc, char **argv) {
   float sigma = atof(argv[3]);
   Image output = DA3D(input, guide, sigma);
   save_image(output, argc > 4 ? argv[4] : "-");
+  return EXIT_SUCCESS;
 }

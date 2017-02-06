@@ -1,6 +1,9 @@
-//
-// Created by Nicola Pierazzo on 07/04/16.
-//
+/*
+ * Utils.cpp
+ *
+ *  Created on: 12/feb/2015
+ *      Author: nicola
+ */
 
 #include <cmath>
 #include "Utils.hpp"

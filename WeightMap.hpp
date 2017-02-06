@@ -1,5 +1,5 @@
 /*
- * WeightMap.h
+ * WeightMap.hpp
  *
  *  Created on: 12/feb/2015
  *      Author: nicola
