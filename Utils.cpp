@@ -143,7 +143,7 @@ Image makeMonochrome (const Image &u) {
   for (int row = 0; row < u.rows(); ++row) {
     for (int col = 0; col < u.columns(); ++col) {
       double v = 0;
-      for (int ch = 1; ch < u.channels(); ++ch) {
+      for (int ch = 0; ch < u.channels(); ++ch) {
         v += u.val(col, row, ch);
       }
       result.val(col,row) = v / u.channels();
