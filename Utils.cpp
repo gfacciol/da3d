@@ -139,7 +139,7 @@ bool isMonochrome (const Image &u) {
 }
 
 Image makeMonochrome (const Image &u) {
-  Image result(u.columns(), u.rows());
+  Image result(u.rows(), u.columns());
   for (int row = 0; row < u.rows(); ++row) {
     for (int col = 0; col < u.columns(); ++col) {
       double v = 0;
