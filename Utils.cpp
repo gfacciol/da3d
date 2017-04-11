@@ -8,11 +8,6 @@
 #include <cmath>
 #include "Utils.hpp"
 
-extern "C" {
-#include "iio.h"
-}
-
-using std::string;
 using std::vector;
 using std::pair;
 using std::move;
@@ -23,55 +18,39 @@ using da3d::WeightMap;
 
 namespace utils {
 
-// c: pointer to original argc
-// v: pointer to original argv
-// o: option name after hyphen
-// d: default value (if NULL, the option takes no argument)
-const char *pick_option(int *c, char **v, const char *o, const char *d) {
-  int id = d ? 1 : 0;
-  for (int i = 0; i < *c - id; i++) {
-    if (v[i][0] == '-' && 0 == strcmp(v[i] + 1, o)) {
-      char *r = v[i + id] + 1 - id;
-      for (int j = i; j < *c - id; j++)
-        v[j] = v[j + id + 1];
-      *c -= id + 1;
-      return r;
-    }
-  }
-  return d;
-}
-
-Image read_image(const string &filename) {
-  int w, h, c;
-  float *data = iio_read_image_float_vec(filename.c_str(), &w, &h, &c);
-  Image im(data, h, w, c);
-  free(data);
-  return im;
-}
-
-void save_image(const Image &image, const string &filename) {
-  iio_save_image_float_vec(const_cast<char *>(filename.c_str()),
-                           const_cast<float *>(image.data()),
-                           image.columns(),
-                           image.rows(),
-                           image.channels());
-}
-
-pair<int, int> ComputeTiling(int rows, int columns, int tiles) {
-  float best_r = sqrt(static_cast<float>(tiles * rows) / columns);
+/*! \brief Compute best tiling of image in at most ntiles
+ *
+ *  Returns the pair: rows, columns
+ */
+pair<int, int> ComputeTiling(int rows, int columns, int ntiles) {
+  // The objective is extract ntiles square-ish tiles
+  // For a square image the optimal number of rows is sqrt(ntiles)
+  // The ratio rows/columns permits to handle rectangular images
+  float best_r = sqrt(static_cast<float>(ntiles * rows) / columns);
   int r_low = static_cast<int>(best_r);
   int r_up = r_low + 1;
-  if (r_low < 1) return {1, tiles};
-  if (r_up > tiles) return {tiles, 1};
-  while (tiles % r_low != 0) --r_low;
-  while (tiles % r_up != 0) ++r_up;
-  if (r_up * r_low * columns > tiles * rows) {
-    return {r_low, tiles / r_low};
+  if (r_low < 1) return {1, ntiles};      // single row
+  if (r_up > ntiles) return {ntiles, 1};  // single column
+  // look for the nearest integer divisors of ntiles
+  while (ntiles % r_low != 0) --r_low;
+  while (ntiles % r_up != 0) ++r_up;
+  // this criterion selects between r_low and r_up rows
+  // if   r_up * r_low > best_r^2
+  // then r_up is too large so r_low is selected
+  // else r_low is too small and r_up is selected
+  if (r_up * r_low * columns > ntiles * rows) {
+    return {r_low, ntiles / r_low};
   } else {
-    return {r_up, tiles / r_up};
+    return {r_up, ntiles / r_up};
   }
 }
 
+/*! \brief Split image in tiles
+ *
+ *  Returns a vector containing tiling.first x tiling.sencond images
+ *  each padded by pad_* pixels. Tiles are stored in lexicographic order.
+ *  Padding outside the image is done by symmetrization
+ */
 vector<Image> SplitTiles(const Image &src,
                          int pad_before,
                          int pad_after,
@@ -83,6 +62,7 @@ vector<Image> SplitTiles(const Image &src,
     for (int tc = 0; tc < tiling.second; ++tc) {
       int cstart = src.columns() * tc / tiling.second - pad_before;
       int cend = src.columns() * (tc + 1) / tiling.second + pad_after;
+      // copy image to tile using the above computed limits
       Image tile(rend - rstart, cend - cstart, src.channels());
       for (int row = rstart; row < rend; ++row) {
         for (int col = cstart; col < cend; ++col) {
@@ -100,6 +80,11 @@ vector<Image> SplitTiles(const Image &src,
   return result;
 }
 
+/*! \brief Recompose tiles produced by SplitTiles
+ *
+ *  Returns an image resulting of recomposing the tiling
+ *  padded margins are averaged in the result
+ */
 Image MergeTiles(const vector<pair<Image, Image>> &src,
                  pair<int, int> shape,
                  int pad_before,
@@ -115,6 +100,7 @@ Image MergeTiles(const vector<pair<Image, Image>> &src,
     for (int tc = 0; tc < tiling.second; ++tc) {
       int cstart = shape.second * tc / tiling.second - pad_before;
       int cend = shape.second * (tc + 1) / tiling.second + pad_after;
+      // copy tile to image using the above computed limits
       for (int row = max(0, rstart); row < min(shape.first, rend); ++row) {
         for (int col = max(0, cstart); col < min(shape.second, cend); ++col) {
           for (int ch = 0; ch < channels; ++ch) {
@@ -127,11 +113,40 @@ Image MergeTiles(const vector<pair<Image, Image>> &src,
       ++tile;
     }
   }
+  // normalize by the weight
   for (int row = 0; row < shape.first; ++row) {
     for (int col = 0; col < shape.second; ++col) {
       for (int ch = 0; ch < channels; ++ch) {
         result.val(col, row, ch) /= weights.val(col, row);
       }
+    }
+  }
+  return result;
+}
+
+bool isMonochrome (const Image &u) {
+  for (int row = 0; row < u.rows(); ++row) {
+    for (int col = 0; col < u.columns(); ++col) {
+      float v = u.val(col, row, 0);
+      for (int ch = 1; ch < u.channels(); ++ch) {
+        if (u.val(col, row, ch) != v)  {
+           return false;
+        }
+      }
+    }
+  }
+  return true;
+}
+
+Image makeMonochrome (const Image &u) {
+  Image result(u.columns(), u.rows());
+  for (int row = 0; row < u.rows(); ++row) {
+    for (int col = 0; col < u.columns(); ++col) {
+      double v = 0;
+      for (int ch = 1; ch < u.channels(); ++ch) {
+        v += u.val(col, row, ch);
+      }
+      result.val(col,row) = v / u.channels();
     }
   }
   return result;

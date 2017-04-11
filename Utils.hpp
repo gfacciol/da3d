@@ -53,9 +53,10 @@ inline int SymmetricCoordinate(int pos, int size) {
   return pos;
 }
 
-const char *pick_option(int *c, char **v, const char *o, const char *d);
-da3d::Image read_image(const std::string &filename);
-void save_image(const da3d::Image &image, const std::string &filename);
+bool isMonochrome (const da3d::Image &u);
+
+da3d::Image makeMonochrome (const da3d::Image &u);
+
 std::pair<int, int> ComputeTiling(int rows, int columns, int tiles);
 std::vector<da3d::Image> SplitTiles(const da3d::Image &src, int pad_before,
                                     int pad_after, std::pair<int, int> tiling);
