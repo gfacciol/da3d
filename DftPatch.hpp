@@ -76,6 +76,7 @@ inline DftPatch::~DftPatch() {
   fftwf_free(freq_);
   fftwf_destroy_plan(plan_forward_);
   fftwf_destroy_plan(plan_backward_);
+  fftwf_cleanup();
 }
 
 inline void DftPatch::ToFreq() {

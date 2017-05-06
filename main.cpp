@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
   float sigma = atof(argv[3]);
   // DA3D doesn't work if a color image has monochromatic noise
   if (input.channels()>1 && isMonochrome(input)) {
-     cerr << "Warning: input image has monochromatic noise! " << 
+     cerr << "Warning: input color image has monochromatic noise! " << 
         "Converting to monochrome." << endl;
      input = makeMonochrome(input);
      guide = makeMonochrome(guide);
