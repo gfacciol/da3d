@@ -1,10 +1,10 @@
 da3d
 ====
 
-Nicola Pierazzo, Jean-Michel Morel, Gabriele Facciolo
-<{nicola.pierazzo,morel,facciolo}@cmla.ens-cachan.fr>, CMLA, ENS Paris-Saclay, France
-Complete IPOL article available at: http://www.ipol.im/pub/art/2016/203
-For future releases of the code visit: https://github.com/gfacciol/da3d
+Nicola Pierazzo, Jean-Michel Morel, Gabriele Facciolo   
+<{nicola.pierazzo,morel,facciolo}@cmla.ens-cachan.fr>, CMLA, ENS Paris-Saclay, France   
+Complete IPOL article available at: http://www.ipol.im/pub/art/2016/203   
+For future releases of the code visit: https://github.com/gfacciol/da3d   
 
 DA3D (Data Adaptive Dual Domain Denoising) is a last step denoising method
 that takes as input a noisy image and as a guide the result of any
@@ -36,6 +36,11 @@ To rebuild, e.g. when the code is modified, use
     $ cd build
     $ make
 
+
+This code only supports the PNG, JPEG, and TIFF (float) image formats
+and requires the libpng, libtiff, libjpeg, and libfftw libraries.
+
+
 Usage
 -----
 
@@ -45,4 +50,8 @@ Running the program without parameters prints its usage instructions:
 
       usage: ./da3d noisy guide sigma output
 
-
+The guide image must be computed from the noisy image using another denoising algorithm for instance:
+* [BM3D](http://www.ipol.im/pub/art/2012/l-bm3d/) -- https://github.com/gfacciol/bm3d
+* [NL-Bayes](http://www.ipol.im/pub/art/2013/16/) -- https://github.com/npd/nl-bayes
+* [NL-Means](http://www.ipol.im/pub/art/2011/bcm_nlm/) -- https://github.com/npd/nlmeans
+* [Multiscale DCT Denoising](http://www.ipol.im/pub/pre/201/) -- https://github.com/gfacciol/DCTdenoising
