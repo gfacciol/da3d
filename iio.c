@@ -1,3 +1,4 @@
+/* Copyright (C) 2015, Enric Meinhardt <enric.meinhardt@cmla.ens-cachan.fr> */
 // IIO: a library for reading small images                                  {{{1
 //
 // Goal: load an image (of unknown format) from a given file

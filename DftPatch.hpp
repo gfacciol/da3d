@@ -1,5 +1,5 @@
 /*
- * DftPatch.h
+ * DftPatch.hpp
  *
  *  Created on: 11/feb/2015
  *      Author: nicola
@@ -76,6 +76,7 @@ inline DftPatch::~DftPatch() {
   fftwf_free(freq_);
   fftwf_destroy_plan(plan_forward_);
   fftwf_destroy_plan(plan_backward_);
+  fftwf_cleanup();
 }
 
 inline void DftPatch::ToFreq() {
