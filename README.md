@@ -3,8 +3,8 @@ da3d
 
 Nicola Pierazzo, Jean-Michel Morel, Gabriele Facciolo
 <{nicola.pierazzo,morel,facciolo}@cmla.ens-cachan.fr>, CMLA, ENS Paris-Saclay, France
-Complete IPOL article available at: <FILL THIS>
-For future releases of the code visit: <FILL THIS>
+Complete IPOL article available at: http://www.ipol.im/pub/art/2016/203
+For future releases of the code visit: https://github.com/gfacciol/da3d
 
 DA3D (Data Adaptive Dual Domain Denoising) is a last step denoising method
 that takes as input a noisy image and as a guide the result of any
