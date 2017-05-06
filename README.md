@@ -1,7 +1,7 @@
-da3d
-====
+DA3D: Data Adaptive Dual Domain Denoising
+=========================================
 
-Nicola Pierazzo, Jean-Michel Morel, Gabriele Facciolo   
+Nicola Pierazzo, Jean-Michel Morel, and Gabriele Facciolo   
 <{nicola.pierazzo,morel,facciolo}@cmla.ens-cachan.fr>, CMLA, ENS Paris-Saclay, France   
 Complete IPOL article available at: http://www.ipol.im/pub/art/2016/203   
 For future releases of the code visit: https://github.com/gfacciol/da3d   
