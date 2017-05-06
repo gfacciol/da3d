@@ -2,7 +2,7 @@
  * Utils.cpp
  *
  *  Created on: 12/feb/2015
- *      Author: nicola
+ *      Author: nicola pierazzo <nicola.pierazzo@cmla.ens-cachan.fr>
  */
 
 #include <cmath>

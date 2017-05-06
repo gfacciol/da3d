@@ -2,7 +2,7 @@
  * Utils.hpp
  *
  *  Created on: 23/mar/2015
- *      Author: nicola
+ *      Author: nicola pierazzo <nicola.pierazzo@cmla.ens-cachan.fr>
  */
 
 #ifndef DA3D_UTILS_HPP_

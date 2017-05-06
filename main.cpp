@@ -2,7 +2,7 @@
  * main.cpp
  *
  *  Created on: 24/mar/2015
- *      Author: nicola
+ *      Author: nicola pierazzo <nicola.pierazzo@cmla.ens-cachan.fr>
  */
 
 #include <iostream>
@@ -14,26 +14,11 @@
 #include <utility>
 #include "Image.hpp"
 #include "Utils.hpp"
-#include "demoutils.hpp"
+#include "DemoUtils.hpp"
 #include "DA3D.hpp"
 
 using std::cerr;
 using std::endl;
-using std::min;
-using std::max;
-using std::copy;
-using std::ostream_iterator;
-using std::istream_iterator;
-using std::vector;
-using std::string;
-using std::ofstream;
-using std::ifstream;
-using std::istringstream;
-using std::ostringstream;
-using std::getline;
-using std::move;
-using std::pair;
-using std::tie;
 
 using utils::pick_option;
 using utils::read_image;

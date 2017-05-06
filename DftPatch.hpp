@@ -2,7 +2,7 @@
  * DftPatch.hpp
  *
  *  Created on: 11/feb/2015
- *      Author: nicola
+ *      Author: nicola pierazzo <nicola.pierazzo@cmla.ens-cachan.fr>
  */
 
 #ifndef DA3D_DFTPATCH_HPP_

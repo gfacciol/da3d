@@ -2,7 +2,7 @@
  * da3d.hpp
  *
  *  Created on: 24/mar/2015
- *      Author: nicola
+ *      Author: nicola pierazzo <nicola.pierazzo@cmla.ens-cachan.fr>
  */
 
 #ifndef DA3D_DA3D_HPP_

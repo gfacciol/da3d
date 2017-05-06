@@ -1,12 +1,15 @@
-//
-// Created by Gabriele Facciolo on 10/04/17.
-//
+/*
+ * DemoUtils.cpp
+ *
+ *  Created on: 10/apr/2017
+ *      Author: gabriele facciolo <facciolo@cmla.ens-cachan.fr>
+ */
 
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
 #include <utility>
-#include "demoutils.hpp"
+#include "DemoUtils.hpp"
 
 extern "C" {
 #include "iio.h"
@@ -48,4 +51,4 @@ void save_image(const Image &image, const string &filename) {
 }
 
 
-}  // namespace imgutils
+}  // namespace utils

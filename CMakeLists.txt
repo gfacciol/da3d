@@ -57,4 +57,4 @@ link_libraries (${TIFF_LIBRARIES} ${JPEG_LIBRARIES} ${PNG_LIBRARIES})
 
 set_property (SOURCE iio.c PROPERTY COMPILE_FLAGS "-Wno-unused-variable -Wno-unused-parameter -Wno-pointer-sign -Wno-parentheses -Wno-deprecated-declarations -Wno-unused-function")
 
-add_executable(da3d DA3D.cpp DA3D.hpp DftPatch.hpp iio.c iio.h Image.hpp WeightMap.cpp WeightMap.hpp Utils.cpp Utils.hpp demoutils.cpp main.cpp)
+add_executable(da3d DA3D.cpp DA3D.hpp DftPatch.hpp iio.c iio.h Image.hpp WeightMap.cpp WeightMap.hpp Utils.cpp Utils.hpp DemoUtils.cpp main.cpp)
